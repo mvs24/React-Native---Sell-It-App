@@ -1,4 +1,4 @@
-import { ADD_TO_CART } from "../actions/cart";
+import { ADD_TO_CART, INCREASE_ITEM_QUANTITY, DECREASE_ITEM_QUANTITY, REMOVE_ITEM_FROM_CART } from "../actions/cart";
 
 const initialState = {
   cartItems: [],
@@ -26,13 +26,18 @@ export default (state = initialState, action) => {
         updatedCart.map(el => (el.id === item.id ? item[0] : el));
 
         updatedTotal += product.price;
+        updatedTotal = Math.ceil(updatedTotal * 100) / 100;
+
         return {
           ...state,
           cartItems: updatedCart,
           totalAmount: updatedTotal
         };
       } else {
+
         updatedTotal += product.price;
+        updatedTotal = Math.ceil(updatedTotal * 100) / 100;
+
         return {
           ...state,
           cartItems: [
@@ -50,6 +55,84 @@ export default (state = initialState, action) => {
           totalAmount: updatedTotal
         };
       }
+    case DECREASE_ITEM_QUANTITY: 
+      let updatedTotalAmount = state.totalAmount;
+      let updatedCartItems = [...state.cartItems];
+      const itemId = action.itemId;
+      let item = state.cartItems.find(el => el.id === itemId);
+      const priceToRemove = item.price / item.quantity;
+
+      if (item.quantity > 1) {
+        item.quantity = item.quantity - 1;
+        item.price = item.price - priceToRemove.toFixed(2);
+
+        updatedCartItems.map(el => {
+          if(el.id === itemId) {
+            return item;
+          } else {
+            return el;
+          }
+        })
+        updatedTotalAmount = updatedTotalAmount - priceToRemove;
+        updatedTotalAmount = Math.ceil(updatedTotalAmount * 100) / 100;
+
+        return {
+          ...state,
+          cartItems: updatedCartItems,
+          totalAmount: updatedTotalAmount
+        }
+      } else {
+        let updatedCartItems = [...state.cartItems];
+        updatedCartItems = updatedCartItems.filter(el => el.id !== itemId);
+        updatedTotalAmount = updatedTotalAmount - priceToRemove;
+        updatedTotalAmount = Math.ceil(updatedTotalAmount * 100) / 100;
+        
+        return {
+          ...state,
+          cartItems: updatedCartItems,
+          totalAmount: updatedTotalAmount
+        }
+      }
+    case INCREASE_ITEM_QUANTITY:
+        let updatedAmount = state.totalAmount;
+        let updatedCart = [...state.cartItems];
+        const id = action.itemId;
+        let choosenItem = updatedCart.find(el => el.id === id);
+        const priceToAdd = choosenItem.price / choosenItem.quantity;
+
+        choosenItem.quantity = choosenItem.quantity + 1;
+        choosenItem.price = choosenItem.price + priceToAdd;
+
+        updatedCart.map(el => {
+          if (el.id === id) {
+            return choosenItem;
+          } else {
+            return el;
+          }
+        });
+        updatedAmount += priceToAdd;
+        updatedAmount = Math.ceil(updatedAmount * 100) / 100;
+
+        return {
+          ...state,
+          cartItems: updatedCart,
+          totalAmount: updatedAmount
+        }
+      case REMOVE_ITEM_FROM_CART: 
+        let updatedCartToRemove = [...state.cartItems];
+        const itemToRemove =  updatedCartToRemove.filter(el => el.id === action.itemId)[0];
+        const itemToRemovePrice = itemToRemove.price;  
+        let amount = state.totalAmount;
+        amount = amount - itemToRemovePrice;
+        amount = Math.ceil(amount * 100) / 100;
+        updatedCartToRemove = updatedCartToRemove.filter(el => el.id !== action.itemId);
+
+        return {
+          ...state,
+          cartItems: updatedCartToRemove,
+          totalAmount: amount
+        }
+
     default:
       return state;
   }
