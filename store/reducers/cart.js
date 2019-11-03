@@ -1,8 +1,9 @@
-import { ADD_TO_CART, INCREASE_ITEM_QUANTITY, DECREASE_ITEM_QUANTITY, REMOVE_ITEM_FROM_CART } from "../actions/cart";
+import { ADD_TO_CART, INCREASE_ITEM_QUANTITY, DECREASE_ITEM_QUANTITY, REMOVE_ITEM_FROM_CART, ORDER_ITEMS } from "../actions/cart";
 
 const initialState = {
   cartItems: [],
-  totalAmount: 0
+  totalAmount: 0,
+  orders: []
 };
 
 export default (state = initialState, action) => {
@@ -132,6 +133,15 @@ export default (state = initialState, action) => {
           cartItems: updatedCartToRemove,
           totalAmount: amount
         }
+      case ORDER_ITEMS: 
+        const itemsToOrder = action.items;
+
+        return {
+          ...state,
+          cartItems: [],
+          totalAmount: 0,
+          orders: itemsToOrder
+        };
 
     default:
       return state;

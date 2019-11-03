@@ -1,20 +1,25 @@
 import React from 'react';
 import { View, Button, Text, StyleSheet, ScrollView } from 'react-native';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 
 import COLORS from '../constants/Colors';
 import { FlatList } from 'react-native-gesture-handler';
 import Item from '../components/Item';
+import { orderCartItems } from '../store/actions/cart'
 
 
 const OrderScreen = props => {
   const cartItems = props.cart.cartItems;
+  const dispatch = useDispatch();
+
+  const orderItems = items => orderCartItems(items);
+
     return (
       <View>
         <View style={styles.order}>
           <Text style={styles.amount}>Total Amount: <Text style={styles.price}>${props.cart.totalAmount}</Text></Text>
           <View style={styles.button}>
-            <Button color={COLORS.whiteBlue} title='Order Now' onPress={() => {}}/>
+            <Button color={COLORS.whiteBlue} title='Order Now' onPress={ () => dispatch(orderItems(cartItems)) }/>
           </View> 
         </View>
         <FlatList
@@ -55,7 +60,7 @@ const styles = StyleSheet.create({
     marginLeft: 20
   },
   button: {
-    marginLeft: 120
+    alignSelf: "flex-end"
   },
 });
 
