@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStore, combineReducers } from 'redux';
 import  { Provider }  from 'react-redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+// import { composeWithDevTools } from 'redux-devtools-extension';
 
 import ProductsNavigator from './navigation/ProductsNavigator';
 import ProductsReducer from './store/reducers/products';
@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
   cart: CartReducer
 });
 
-const store = createStore(rootReducer, composeWithDevTools());
+const store = createStore(rootReducer);
 
 export default () => {
   return (

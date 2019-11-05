@@ -12,7 +12,10 @@ const OrderScreen = props => {
   const cartItems = props.cart.cartItems;
   const dispatch = useDispatch();
 
-  const orderItems = items => orderCartItems(items);
+  const orderItems = items => {
+    orderCartItems(items);
+    props.navigation.navigate('Ordered')
+  }
 
     return (
       <View>
