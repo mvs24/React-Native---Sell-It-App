@@ -13,7 +13,7 @@ const OrderScreen = props => {
   const dispatch = useDispatch();
 
   const orderItems = items => {
-    orderCartItems(items);
+    dispatch(orderCartItems(items));
     props.navigation.navigate('Ordered')
   }
 
@@ -21,9 +21,10 @@ const OrderScreen = props => {
       <View>
         <View style={styles.order}>
           <Text style={styles.amount}>Total Amount: <Text style={styles.price}>${props.cart.totalAmount}</Text></Text>
-          <View style={styles.button}>
-            <Button color={COLORS.whiteBlue} title='Order Now' onPress={ () => dispatch(orderItems(cartItems)) }/>
+         {cartItems.length > 0 && <View style={styles.button}>
+            <Button color={COLORS.whiteBlue} title='Order Now' onPress={ () => orderItems(cartItems) }/>
           </View> 
+         }
         </View>
         <FlatList
         data={cartItems}
