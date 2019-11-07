@@ -9,7 +9,8 @@ import {
 const initialState = {
   cartItems: [],
   totalAmount: 0,
-  orders: []
+  orders: [],
+  totalOrder: 0
 };
 
 export default (state = initialState, action) => {
@@ -143,52 +144,56 @@ export default (state = initialState, action) => {
         totalAmount: amount
       };
     case ORDER_ITEMS:
-      let itemsToOrder = action.items;
-      let updatedOrder = [...state.orders];
+      // let itemsToOrder = action.items;
+      // let updatedOrder = [...state.orders];
 
-      if (updatedOrder.length === 0) {
-        itemsToOrder.forEach(item => {
-          updatedOrder.unshift(item);
-        });
-      } else {
-        itemsToOrder.forEach((item, i) => {
-          updatedOrder.forEach((updatedItem, index) => {
-            if (item.id === updatedItem.id) {
-              updatedOrder[index] = {
-                description: item.description,
-                id: item.id,
-                imageUrl: item.imageUrl,
-                name: item.name,
-                userId: item.userId,
-                quantity: updatedItem.quantity + item.quantity,
-                price: item.price * item.quantity + updatedItem.price
-              };
-            } 
-          });
-        });
+      // if (updatedOrder.length === 0) {
+      //   itemsToOrder.forEach(item => {
+      //     updatedOrder.unshift(item);
+      //   });
+      // } else {
+      //   itemsToOrder.forEach((item, i) => {
+      //     updatedOrder.forEach((updatedItem, index) => {
+      //       if (item.id === updatedItem.id) {
+      //         updatedOrder[index] = {
+      //           description: item.description,
+      //           id: item.id,
+      //           imageUrl: item.imageUrl,
+      //           name: item.name,
+      //           userId: item.userId,
+      //           quantity: updatedItem.quantity + item.quantity,
+      //           price: item.price * item.quantity + updatedItem.price
+      //         };
+      //       } 
+      //     });
+      //   });
       
-        itemsToOrder.forEach((item, i) => {
-          updatedOrder.forEach((updatedItem, index) => {
-            if (item.id !== updatedItem.id) {
-              updatedOrder.unshift(item);
-            }
-          })
-        })
-      }
+      //   itemsToOrder.forEach((item, i) => {
+      //     updatedOrder.forEach((updatedItem, index) => {
+      //       if (item.id !== updatedItem.id) {
+      //         updatedOrder.unshift(item);
+      //       }
+      //     })
+      //   })
+      // }
 
-      for (let i = 0; i < updatedOrder.length; i++) {
-        for (let j = i + 1; j < updatedOrder.length; j++) {
-          if (updatedOrder[i].id === updatedOrder[j].id) {
-            updatedOrder.splice(i, 1);
-          }
-        }
-      }
+      // for (let i = 0; i < updatedOrder.length; i++) {
+      //   for (let j = i + 1; j < updatedOrder.length; j++) {
+      //     if (updatedOrder[i].id === updatedOrder[j].id) {
+      //       updatedOrder.splice(i, 1);
+      //     }
+      //   }
+      // }
+      let updatedOrder = state.cartItems;
+      updatedOrder.date = Date.now();
+      let updatedTotalOrder = state.totalAmount + state.totalOrder; 
 
       return {
         ...state,
         cartItems: [],
         totalAmount: 0,
-        orders: updatedOrder
+        orders: updatedOrder,
+        totalOrder: updatedTotalOrder
       };
 
     default:
