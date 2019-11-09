@@ -19,7 +19,6 @@ const OrderedScreen = props => {
   // const totalOrder = orders.reduce((acc, cur) => {
   //   return acc + (cur.price * 1);
   // }, 0)
-
   console.log(orders);
   console.log(totalOrder);
 
