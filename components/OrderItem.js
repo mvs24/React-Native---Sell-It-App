@@ -14,10 +14,6 @@ const OrderItem = ({name, description, quantity, price}) => {
     return null;
 };
 
-const styles = StyleSheet.create({
-    orderInfo: {
-        borderWidth: 2
-    }
-});
+const styles = StyleSheet.create({});
 
 export default OrderItem;
