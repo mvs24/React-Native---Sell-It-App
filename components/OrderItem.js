@@ -10,8 +10,8 @@ const OrderItem = ({name, description, quantity, price}) => {
     //             <Text>Total Price: {price}</Text> 
     //          </View>
     //      </View>  
-    // )  
-    return null;
+    // )   
+    return null; 
 };
 
 const styles = StyleSheet.create({});
