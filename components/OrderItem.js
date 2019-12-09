@@ -8,7 +8,7 @@ const OrderItem = ({name, description, quantity, price}) => {
     //      <View style={styles.orderInfo}>
     //          <View>
     //             <Text>Total Price: {price}</Text> 
-    //          </View>
+    //          </View> 
     //      </View>   
     // )    
     return null; 
