@@ -10,7 +10,7 @@ const OrderItem = ({name, description, quantity, price}) => {
     //             <Text>Total Price: {price}</Text> 
     //          </View> 
     //      </View>   
-    // )    
+    // )     
     return null; 
 };
 
